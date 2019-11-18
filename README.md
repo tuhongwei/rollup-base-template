@@ -1,2 +1,2 @@
 # rollup-base-template
-rollup打包SDK时基本配置
+rollup打包SDK、jslib时基本配置
