@@ -12,7 +12,16 @@ const banner =
  * @license MIT
  */`;
 
-console.log(process.env.ROLLUP_WATCH)
+console.log(process.env.ROLLUP_WATCH);
+let terserOptions = {};
+if (process.env.NODE_ENV === 'production') {
+  terserOptions.compress = {
+    drop_debugger: true,
+    drop_console: true,
+    pure_funcs: ['console.log'] //移除console
+  };
+}
+
 export default {
   input: 'src/index.js',
   output: {
@@ -42,6 +51,6 @@ export default {
     replace({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
     }),
-    process.env.NODE_ENV === 'production' && terser()
+    process.env.NODE_ENV !== 'development' && terser(terserOptions)
   ]
 };
