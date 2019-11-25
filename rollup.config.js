@@ -4,7 +4,7 @@ import babel from 'rollup-plugin-babel';
 import json from 'rollup-plugin-json';
 import replace from 'rollup-plugin-replace';
 import { terser } from 'rollup-plugin-terser';
-const version = process.env.VERSION || require('./package.json').version
+import { version, main, module, browser } from './package.json';
 const banner =
 `/**
  * rollup-base-template v${version}
@@ -23,12 +23,24 @@ if (process.env.NODE_ENV === 'production') {
 
 export default {
   input: 'src/index.js',
-  output: {
-    banner,
-    file: 'dist/index.js',
-    format: 'umd',
-    name: 'jslib',
-  },
+  output: [
+    {
+      banner,
+      file: main,
+      format: 'cjs'
+    },
+    {
+      banner,
+      file: module,
+      format: 'es'
+    },
+    {
+      banner,
+      file: browser,
+      format: 'umd',
+      name: 'AdSDK'
+    }
+  ],
   plugins: [
     resolve({
       mainFields: ['module', 'main'],
