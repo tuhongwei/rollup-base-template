@@ -38,7 +38,7 @@ export default {
       banner,
       file: browser,
       format: 'umd',
-      name: 'AdSDK'
+      name: 'index'
     }
   ],
   plugins: [
