@@ -12,7 +12,6 @@ const banner =
  * @license MIT
  */`;
 
-console.log(process.env.ROLLUP_WATCH);
 let terserOptions = {};
 if (process.env.NODE_ENV === 'production') {
   terserOptions.compress = {
