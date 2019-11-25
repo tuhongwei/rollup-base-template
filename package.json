@@ -2,7 +2,10 @@
   "name": "@twittytop/rollup-base-template",
   "version": "1.0.0",
   "description": "rollup打包SDK、jslib时基本配置",
-  "main": "./src/index.js",
+  "main": "dist/index.common.js",
+  "module": "dist/index.esm.js",
+  "browser": "dist/index.umd.js",
+  "unpkg": "dist/index.js",
   "directories": {
     "example": "examples",
     "test": "tests"
