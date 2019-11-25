@@ -39,11 +39,7 @@ export default {
         moduleDirectory: 'node_modules'
       }
     }),
-    // commonjs({
-    //   namedExports: {
-
-    //   }
-    // }),
+    commonjs(),
     babel({
       exclude: 'node_modules/**'
     }),
