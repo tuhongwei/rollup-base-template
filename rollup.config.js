@@ -3,6 +3,8 @@ import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
 import json from 'rollup-plugin-json';
 import replace from 'rollup-plugin-replace';
+import postcss from 'rollup-plugin-postcss'; // 转换样式
+import url from "@rollup/plugin-url"; // 转换图片
 import { terser } from 'rollup-plugin-terser';
 import { version, main, module, browser } from './package.json';
 const banner =
@@ -51,6 +53,8 @@ export default {
       }
     }),
     commonjs(),
+    postcss(),
+    url(),
     babel({
       exclude: 'node_modules/**'
     }),
