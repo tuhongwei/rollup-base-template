@@ -3,8 +3,10 @@ import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
 import json from 'rollup-plugin-json';
 import replace from 'rollup-plugin-replace';
+import postcss from 'rollup-plugin-postcss'; // 转换样式
+import url from "@rollup/plugin-url"; // 转换图片
 import { terser } from 'rollup-plugin-terser';
-const version = process.env.VERSION || require('./package.json').version
+import { version, main, module, browser } from './package.json';
 const banner =
 `/**
  * rollup-base-template v${version}
@@ -12,15 +14,35 @@ const banner =
  * @license MIT
  */`;
 
-console.log(process.env.ROLLUP_WATCH)
+let terserOptions = {};
+if (process.env.NODE_ENV === 'production') {
+  terserOptions.compress = {
+    drop_debugger: true,
+    drop_console: true,
+    pure_funcs: ['console.log'] //移除console
+  };
+}
+
 export default {
   input: 'src/index.js',
-  output: {
-    banner,
-    file: 'dist/index.js',
-    format: 'umd',
-    name: 'jslib',
-  },
+  output: [
+    {
+      banner,
+      file: main,
+      format: 'cjs'
+    },
+    {
+      banner,
+      file: module,
+      format: 'es'
+    },
+    {
+      banner,
+      file: browser,
+      format: 'umd',
+      name: 'index'
+    }
+  ],
   plugins: [
     resolve({
       mainFields: ['module', 'main'],
@@ -30,11 +52,9 @@ export default {
         moduleDirectory: 'node_modules'
       }
     }),
-    // commonjs({
-    //   namedExports: {
-
-    //   }
-    // }),
+    commonjs(),
+    postcss(),
+    url(),
     babel({
       exclude: 'node_modules/**'
     }),
@@ -42,6 +62,6 @@ export default {
     replace({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
     }),
-    process.env.NODE_ENV === 'production' && terser()
+    process.env.NODE_ENV !== 'development' && terser(terserOptions)
   ]
 };
