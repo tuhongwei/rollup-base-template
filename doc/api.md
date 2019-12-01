@@ -4,10 +4,9 @@
 
 函数参数和返回值（要遵守下面的例子的规则）
 
-- param {string} name1 name1 描述
-- return {string} 返回值描述
-
-举个例子（要包含代码用例）
+@param {string} name1 name1 描述
+@returns {string} 返回值描述
+@example 举个例子（要包含代码用例）
 
 // 代码
 
